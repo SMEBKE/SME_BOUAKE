@@ -30,12 +30,27 @@ class Patient(models.Model):
         ('ASSANDRE', 'CSR ASSANDRE') 
     ]
 
+    CHOIX_ANTECEDENT = [
+        ('OUI', 'OUI'),
+        ('NON', 'NON')     
+    ]
+
     code_patient = models.CharField(max_length=30,primary_key=True)
+    nom_prenoms = models.CharField(max_length=150, blank=True)
     sexe = models.CharField(max_length=2, choices=CHOIX_SEXE, blank=True)
     age = models.IntegerField()
+    lieu_residence = models.CharField(max_length=100, blank=True)
+    Num_tel = models.CharField(max_length=10, null = True, blank=True)
+    profession = models.CharField(max_length=100, blank=True)
     pathologie = models.CharField(max_length=15, choices=CHOIX_PATHOLOGIE, blank=True)
     centre_sante = models.CharField(max_length=50, choices=CHOIX_CDS, blank=True)
+    antecedent_traitement = models.CharField(max_length=3, choices=CHOIX_ANTECEDENT, blank=True)
     date_admission = models.DateField(null = True)
+
+    # date enregistrement patient.
+    created_at = models.DateTimeField(auto_now_add=True, null = True)
+     # date modification patient.
+    updated_at = models.DateTimeField(auto_now=True, null = True)
 
     # Affichage champs
     def __str__(self):
@@ -87,10 +102,16 @@ class Suivipatient(models.Model):
     dotation = models.IntegerField(null = True, blank = True)
     nb_molecule = models.IntegerField(null = True, blank = True)
     type_molecule = models.CharField(max_length=25, choices=CHOIX_TYPE_MOL, null = True, blank = True)
-    molecule = models.CharField(max_length=50, null = True, blank = True)
+    molecule = models.CharField(max_length=200, null = True, blank = True)
     etat_patient = models.CharField(max_length=20, choices=CHOIX_ETAT_PATIENT, null = True, blank = True)
     date_etat = models.DateField(null = True, blank = True)
     commentaire = models.TextField(max_length=100,null = True, blank = True)
+
+    # date enregistrement suivipatient.
+    created_at = models.DateTimeField(auto_now_add=True, null = True)
+     # date modification suivipatient.
+    updated_at = models.DateTimeField(auto_now=True, null = True)
+
     # Affichage champs
     #def __str__(self):
        # return self.commentaire
